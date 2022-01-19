@@ -1,7 +1,7 @@
 ## Scrollbar
 
 
-By default Scrollable Widgets like `ListView` hava a **scrollbar**,when the app is run on *linux* or *macOS* or *windows*.Tehre are two ways for enable **scrollbar** in *android* , *ios* and *fuchsia* : 
+By default scrollable widgets like `ListView` hava a **scrollbar**,when the app is run on *linux* or *macOS* or *windows*.Tehre are two ways for enable **scrollbar** in *android* , *ios* and *fuchsia* : 
 
 1)Enabling it for the all scrollable widgets of the app:
 
