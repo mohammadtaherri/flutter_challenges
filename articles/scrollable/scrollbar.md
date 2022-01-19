@@ -58,7 +58,7 @@ class ScrollbarsToggle extends StatelessWidget {
 }
 ```
 
-In a `CustomScrollView` you can also change the behavior of the Widget without changing the behavior of the all widgets in the app or a subtree.
+In a `CustomScrollView` you can also change the behavior of the widget without changing the behavior of the all widgets in the app or a subtree.
 
 ```dart
 CustomScrollView(
