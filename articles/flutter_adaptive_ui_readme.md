@@ -26,7 +26,7 @@ For more informations follow this [link](https://docs.flutter.dev/development/ui
 
 ## Overview
 
-This package helps you for building **Adaptive UI**.For this purpose, we are going to use following params:
+This package helps you for building **Adaptive UI**.For this purpose, we are going to use the following params:
 
 #### Platform Type
 * android
@@ -59,7 +59,7 @@ This package helps you for building **Adaptive UI**.For this purpose, we are goi
 * Cupertino
 * Fluent
 
-Then we are going to use following widgets for building **Adaptive UI** based on these params:
+Then we are going to use the following widgets for building **Adaptive UI** based on these params:
 
 * [AdaptiveBuilder](#adaptivebuilder)
 * [PlatformBuilder](#platformbuilder)
@@ -69,7 +69,7 @@ But before we focus on above widgets, let's talk about [Breakpoint](#breakpoint)
 
 ## Breakpoint
 
-By default the **Screen Size** and the **Screen Type** are obtained based on following values:
+By default the **Screen Size** and the **Screen Type** are obtained based on the following values:
 
 | Screen Width Range | Screen Size   | Screen Type   |
 | -------------------| ------------- | ------------- |
@@ -182,7 +182,7 @@ All params are optional.
 
 The **Breakpoint** widget is an **InheritedWidget** and so you can use the **Breakpoint.of(context)** (static method) to obtain the **BreakpointData**.
 
-After talking about **Breakpoint**, Now is the time that we talk about the **AdaptiveBuilder** widget for building **Adaptive UI**.
+After talking about the **Breakpoint**, Now is the time that we talk about the **AdaptiveBuilder** widget for building **Adaptive UI**.
 
 let's go.
 
@@ -297,7 +297,9 @@ You can use this param to build your UI based on your purpose.
 
 You must pass an object of **AdaptiveLayoutDelegate** to this param.
 
-The **AdaptiveLayoutDelegate** is an abstract class and so you must use its implementations.
+The **AdaptiveLayoutDelegate** is an abstract class and so you must implement a custom class.
+
+don't worry!!!
 
 I have provided some custom implementations for you.
 
