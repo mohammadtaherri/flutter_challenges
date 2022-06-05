@@ -67,7 +67,7 @@ But before we focus on above widgets, let's talk about [Breakpoint](#breakpoint)
 
 ## Breakpoint
 
-By default the **Screen Size** and the **SCreen Type** are obtained based on following values:
+By default the **Screen Size** and the **Screen Type** are obtained based on following values:
 
 | Screen Width Range | Screen Size   | Screen Type   |
 | -------------------| ------------- | ------------- |
@@ -180,13 +180,13 @@ All params are optional.
 
 The **Breakpoint** widget is an **InheritedWidget** and so you can use the **Breakpoint.of(context)** (static method) to obtain the **BreakpointData**.
 
-After talking about **Breakpoint**, Now is the time that we talk about **Adaptive Builder** widget for building **Adaptive UI**.
+After talking about **Breakpoint**, Now is the time that we talk about the **AdaptiveBuilder** widget for building **Adaptive UI**.
 
 let's go.
 
 ## AdaptiveBuilder
 
-You should use a `AdaptiveBuilder` widget to build an adaptive UI.
+You should use the `AdaptiveBuilder` widget to build an adaptive UI.
 
 Wrap your entire screen with this widget:
 ```dart
@@ -206,8 +206,94 @@ class _HomePageState extends State<HomePage> {
   }
 }
 ```
-This widget accepts following params:
 
+The **AdaptiveBuilder** has two contructors.
+
+#### AdaptiveBuilder Default Constructor
+
+The default constructor of the **AdaptiveBuilder** accepts three params:
+
+| Param                 | Type                                      |  
+| ----------------------| ----------------------------------------- | 
+| defaultBuilder        | AdaptiveWidgetBuilder   (Required)        | 
+| layoutDelegate        | AdaptiveLayoutDelegate? (Optional)        | 
+| breakpointData        | BreakpointData?         (Optional)        |
+
+##### breakpointData
+
+The **AdaptiveBuilder**  obtains the **BreakpointData** based on the following rules:
+
+1. the **breakpointData** param that is passed to its constructor.
+2. If the **breakpointData** param is null(no param is passed to its constructor), The **breakPointData** is obtained from the closest **Breakpoint** instance that encloses its context.
+3. If there is no **Breakpoint** in the widget tree above the **AdaptiveBuilder**, it will use the default sizes.
+
+
+Use this param to change the default sizes:
+
+1. Use the ***Breakpoint.of(context)** to obtain The **breakPointData** from the closest **Breakpoint** instance that encloses the given context and then change sizes by calling the **copyWith()** method:
+
+```dart
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return AdaptiveBuilder(
+      breakpointData: Breakpoint.of(context).copyWith(
+        minSmallScreenWidth: ,
+        minMediumScreenWidth: ,
+        minLargeHandsetWith: ,
+        minLargeDesktopWidth: ,
+        ...
+      ),
+    );
+  }
+}
+```
+
+2. Or pass a fresh **breakpointData** by creating the **breakpointData** from scratch:
+
+```dart
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return AdaptiveBuilder(
+      breakpointData: BreakpointData(
+        minSmallScreenWidth: 350,
+        minMediumScreenWidth: 700,
+        minLargeScreenWidth: 1200,
+        minXLargeScreenWidth: 1800,
+        minMediumHandsetWith: 350,
+        minLargeHandsetWith: 420,
+        minSmallTabletWidth: 600,
+        minLargeTabletWidth: 900,
+        minSmallDesktopWidth: 1100,
+        minMediumDesktopWidth: 1400,
+        minLargeDesktopWidth: 1900,
+      ),
+    );
+  }
+}
+```
+
+##### layoutDelegate
+
+##### defaultBuilder
+
+#### AdaptiveBuilder Custom Constructor (AdaptiveBuilder.custom)
 
 | Param                 | Type                                      |  
 | ----------------------| ----------------------------------------- | 
