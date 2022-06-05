@@ -2,22 +2,47 @@
 
 # Flutter Adaptive UI
 
+
 ![0_t8MtUq5ko9abs0TD](https://user-images.githubusercontent.com/44123678/170714501-28c21458-4447-469c-8975-f14b64fc31f4.jpg)
 
 Flutter provides new opportunities to build apps that can run on mobile, desktop, and the web from a single codebase. However, with these opportunities, come new challenges. You want your app to feel familiar to users, adapting to each platform by maximizing usability and ensuring a comfortable and seamless experience. That is, you need to build apps that are not just multiplatform, but are fully platform adaptive.
 
 For more informations follow this [link](https://docs.flutter.dev/development/ui/layout/building-adaptive-apps).
 
-This package uses **_Screen Size_** , **_Screen Type_** and **_Design language_** for building Adaptive UI.
+# Documentation
 
-### Screen Size
+<img src="https://openclipart.org/download/286938/Double-Decker-Bus.svg" width="80"> 
+
+# Quick start API tour
+
+* [Overview](#overview)
+* [Breakpoint](#breakpoint)
+* [AdaptiveBuilder](#adaptivebuilder)
+* [PlatformBuilder](#platformbuilder)
+* [AdaptiveDesign](#adaptivedesign)
+ 
+
+## Overview
+
+This package helps you for building **Adaptive UI**.For this purpose, we are going to use following params:
+
+#### Platform Type
+* android
+* fucshia
+* iOS
+* windows
+* macOS
+* linux
+* web
+
+#### Screen Size
 * X Small
 * Small
 * Medium
 * Large
 * X Lagre
 
-### Screen Type
+#### Screen Type
 * Small Handset
 * Medium Handset
 * Large Handset
@@ -27,12 +52,22 @@ This package uses **_Screen Size_** , **_Screen Type_** and **_Design language_*
 * Medium Desktop
 * Large Desktop
 
-### Design Language
+#### Design Language
 * Material
 * Cupertino
 * Fluent
 
-By default the **_Screen Size_** and the **_SCreen Type_** are obtained from following table:
+Then we are going to use following widgets for building **Adaptive UI** based on these params:
+
+* [AdaptiveBuilder](#adaptivebuilder)
+* [PlatformBuilder](#platformbuilder)
+* [AdaptiveDesign](#adaptivedesign)
+
+But before we focus on above widgets, let's talk about [Breakpoint](#breakpoint).
+
+## Breakpoint
+
+By default the **Screen Size** and the **SCreen Type** are obtained based on following values:
 
 | Screen Width Range | Screen Size   | Screen Type   |
 | -------------------| ------------- | ------------- |
@@ -57,7 +92,7 @@ And the **_Design language_** :
 | Others             | Material        | 
 
 
-You can change the default sizes by wrapping your `MaterialApp` in a`Breakpoint` widget:
+You can change the default sizes by wrapping your **MaterialApp** in a **Breakpoint** widget:
 
 ```dart
 import 'package:flutter/material.dart';
@@ -79,7 +114,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-Now you can override the default sizes by set a `breakpointData` param:
+Now you can change the default sizes by pass a **breakpoint Data** to the **Breakpoint**'s constructor:
 
 
 ```dart
@@ -122,26 +157,34 @@ class MyApp extends StatelessWidget {
 
 All params are optional.
 
-| Param              | Definition                                           | Default value |
-| -------------------| ---------------------------------------------------- | ------------- |
-| small              | The Minimum Width of the small Screen                | 600           |
-| medium             | The Minimum Width of the medium Screen               | 1024          |
-| large              | The Minimum Width of the large Screen                | 1440          |
-| xLarge             | The Minimum Width of the xLarge Screen               | 1920          |
-| mediumHandset      | The Minimum Width of the medium handset              | 360           |
-| LargeHandset       | The Minimum Width of the large hanset                | 400           |
-| smallTablet        | The Minimum Width of the small tablet                | 600           |
-| largeTablet        | The Minimum Width of the large tablet                | 720           |
-| smallDesktop       | The Minimum Width of the small desktop               | 1024          |
-| MediumDesktop      | The Minimum Width of the medium desktop              | 1440          |
-| largeDesktop       | The Minimum Width of the large desktop               | 1920          |
+| Param                     | Definition                                           | Default value |
+| --------------------------| ---------------------------------------------------- | ------------- |
+| minSmallScreenWidth       | The Minimum Width of the small Screen                | 600           |
+| minMediumScreenWidth      | The Minimum Width of the medium Screen               | 1024          |
+| minLargeScreenWidth       | The Minimum Width of the large Screen                | 1440          |
+| minXLargeScreenWidth      | The Minimum Width of the xLarge Screen               | 1920          |
+| minMediumHandsetWith      | The Minimum Width of the medium handset              | 360           |
+| minLargeHandsetWith       | The Minimum Width of the large hanset                | 400           |
+| minSmallTabletWidth       | The Minimum Width of the small tablet                | 600           |
+| minLargeTabletWidth       | The Minimum Width of the large tablet                | 720           |
+| minSmallDesktopWidth      | The Minimum Width of the small desktop               | 1024          |
+| minMediumDesktopWidth     | The Minimum Width of the medium desktop              | 1440          |
+| minLargeDesktopWidth      | The Minimum Width of the large desktop               | 1920          |
 
 
-- If the screen width is less than the _small_ (default = 600),the **Screen Size** will be **xSmall**
-- If the screen width is less than the _mediumHandset_ (default = 360), the **Screen Type** will be **smallHandset**
+- If the screen width is less than the **_minSmallScreenWidth_** (default = 600),the **Screen Size** will be **xSmall**.
+- If the screen width is less than the **_minMediumHandsetWith_** (default = 360), the **Screen Type** will be **smallHandset**.
 
 
-## Usage
+#### Breakpoint.of(context)
+
+The **Breakpoint** widget is an **InheritedWidget** and so you can use the **Breakpoint.of(context)** (static method) to obtain the **BreakpointData**.
+
+After talking about **Breakpoint**, Now is the time that we talk about **Adaptive Builder** widget for building **Adaptive UI**.
+
+let's go.
+
+## AdaptiveBuilder
 
 You should use a `AdaptiveBuilder` widget to build an adaptive UI.
 
@@ -558,3 +601,7 @@ class _HomePageState extends State<HomePage> {
   
 
 #### AdaptiveLayoutDelegateWithSingleBuilder
+
+## PlatformBuilder
+
+## AdaptiveDesign
