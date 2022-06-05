@@ -218,8 +218,8 @@ The default constructor of the **AdaptiveBuilder** accepts three params:
 | Param                 | Type                                      |  
 | ----------------------| ----------------------------------------- | 
 | defaultBuilder        | AdaptiveWidgetBuilder   (Required)        | 
-| layoutDelegate        | AdaptiveLayoutDelegate? (Optional)        | 
-| breakpointData        | BreakpointData?         (Optional)        |
+| [layoutDelegate](#layoutdelegate)        | AdaptiveLayoutDelegate? (Optional)        | 
+| [breakpointData](#breakpointdata)        | BreakpointData?         (Optional)        |
 
 ### breakpointData
 
@@ -577,6 +577,8 @@ If the **layoutDelegate** is not passed or it is passed but a custom builder for
 You must pass a [AdaptiveWidgetBuilder](#adaptivewidgetbuilder) to this param.
 
 
+
+
 ### AdaptiveWidgetBuilder
 
 This builder gives you a **BuildContext** and a [Screen](#screen) and you must return a widget.
@@ -602,54 +604,54 @@ The custom constructor of the **AdaptiveBuilder** accepts following params:
 | [macosDelegate](#macosdelegate)         | AdaptiveLayoutDelegate? (Optional)        | 
 | [linuxDelegate](#linuxdelegate)         | AdaptiveLayoutDelegate? (Optional)        | 
 | [webDelegate](#webdelegate)           | AdaptiveLayoutDelegate? (Optional)        | 
-| allPlatformsDelegate  | AdaptiveLayoutDelegate? (Optional)        |
-| breakpointData        | BreakpointData?         (Optional)        |
+| [allPlatformsDelegate](#allplatformsdelegate)  | AdaptiveLayoutDelegate? (Optional)        |
+| [breakpointData](#breakpointdata)        | BreakpointData?         (Optional)        |
 
 
 ### androidDelegate
 
-By this param you can build your UI for android platform.
+By this param you can build your custom UI for android platform.
 
 You must pass a **AdaptiveLayoutDelegate** to this param.
 
 ### fuchsiaDelegate
 
-By this param you can build your UI for fuchsia platform.
+By this param you can build your custom UI for fuchsia platform.
 
 You must pass a **AdaptiveLayoutDelegate** to this param.
 
 
 ### iosDelegate
 
-By this param you can build your UI for iOS platform.
+By this param you can build your custom UI for iOS platform.
 
 You must pass a **AdaptiveLayoutDelegate** to this param.
 
 
 ### windowsDelegate
 
-By this param you can build your UI for windows platform.
+By this param you can build your custom UI for windows platform.
 
 You must pass a **AdaptiveLayoutDelegate** to this param.
 
 
 ### macosDelegate
 
-By this param you can build your UI for macOS platform.
+By this param you can build your custom UI for macOS platform.
 
 You must pass a **AdaptiveLayoutDelegate** to this param.
 
 
 ### linuxDelegate
 
-By this param you can build your UI for linux platform.
+By this param you can build your custom UI for linux platform.
 
 You must pass a **AdaptiveLayoutDelegate** to this param.
 
 
 ### webDelegate
 
-By this param you can build your UI for web platform.
+By this param you can build your custom UI for web platform.
 
 You must pass a **AdaptiveLayoutDelegate** to this param.
 
@@ -667,29 +669,17 @@ For all these params you can use the following implementations:
 
 ### allPlatformsDelegate
 
-First of all, this widget obtains the **ScreenSize** , **ScreenType** and **Designlanguage** and then builds UI based on the following rules:
+If for the desired platform is not passed a **AdaptiveLayoutDelegate** or it is passed but a custom builder for the desired purpos (ScreenSize , ScreenType , DesignLanguage) is not provided, then the **AdaptiveBuilder** uses this param to build UI.
 
-1. **PlatformType**
+You must pass a **AdaptiveLayoutDelegate** to this param.
 
-The PlatformType is _android_ , _fuchsia_ , _iOS_ , _windows_ , _linux_ , _macOS_ or _web_ .
+This parm is like the [layoutDelegate](#layoutdelegate) in the default constructor.For more information you can see the [layoutDelegate](#layoutdelegate).
 
-First of all, this widget uses a custom delegate based on the **PaltformType** (androidDelegate , fuchsiaDelegate , iosDelegate , windowsDelegate , macOSDelegate , linuxDelegate or webDelegate) to building UI.
+### defaultBuilder
 
-2. **allPlatformDelagate**
+If custom delegates (androidDelegate , ...) and **allPlatformsDelegate** can not build UI, then this param is used to build UI.
 
-If a custom delegate is not provided or the custom delegate is provided but it does not provide a custom builder for the desired size, It will use the **allPlatformDelegate** for building UI.
-
-3. **defaultBuilder**
-
-Eventually, If for the desired platform is not provided a custom delegate or the custom delegate does not provide a custom builder for the desired size 
-and the **allPlatformDelegate** also does not provide that builder ,it will use the builder param for building UI.
-
-
-- **defaultBuilder**
-
-This param is **required** and it is used as default builder to building UI.
-
-You must pass a `AdaptiveWidgetBuilder` : 
+You must pass a [AdaptiveWidgetBuilder](#adaptivewidgetbuilder) to this param.
 
 ```dart
 class HomePage extends StatefulWidget {
@@ -710,23 +700,35 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
-}
 ```
 
+## Summary
 
-- **Custom Delegates**
+First of all, the **AdaptiveBuilder** obtains the **ScreenSize** , **ScreenType** and **Designlanguage** and then builds UI based on the following rules:
 
-All these params are **optional**.
+##### PlatformType
 
-You must pass a `AdaptiveLayoutDelegate`.this class is an abstract class and you can use following implementations or create your custom implementation from scratch:
+The PlatformType is _android_ , _fuchsia_ , _iOS_ , _windows_ , _linux_ , _macOS_ or _web_ .
 
-  
+First of all, this widget uses a custom delegate based on the **PaltformType** (androidDelegate , fuchsiaDelegate , iosDelegate , windowsDelegate , macOSDelegate , linuxDelegate or webDelegate) to building UI.
 
+##### allPlatformsDelagate
+
+If a custom delegate is not provided or the custom delegate is provided but it does not provide a custom builder for the desired size, It will use the **allPlatformsDelegate** for building UI.
+
+##### defaultBuilder
+
+Eventually, If for the desired platform is not provided a custom delegate or the custom delegate does not provide a custom builder for the desired size 
+and the **allPlatformDelegate** also does not provide that builder ,it will use the builder param for building UI.
 
 
 ## PlatformBuilder
 
+The documents will be written in the future.
+
 ## AdaptiveDesign
+
+The documents will be written in the future.
    
 ## Screen
 
