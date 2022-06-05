@@ -21,7 +21,7 @@ For more informations follow this [link](https://docs.flutter.dev/development/ui
 * [PlatformBuilder](#platformbuilder)
 * [AdaptiveDesign](#adaptivedesign)
 * [Screen](#screen)
-* [Utility Functions](#utility)
+* [Utility Functions](#utility_functions)
  
 
 ## Overview
