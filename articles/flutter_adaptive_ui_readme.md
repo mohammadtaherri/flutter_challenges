@@ -20,6 +20,8 @@ For more informations follow this [link](https://docs.flutter.dev/development/ui
 * [AdaptiveBuilder](#adaptivebuilder)
 * [PlatformBuilder](#platformbuilder)
 * [AdaptiveDesign](#adaptivedesign)
+* [Screen](#screen)
+* [Utility Functions](#utility functions)
  
 
 ## Overview
@@ -28,7 +30,7 @@ This package helps you for building **Adaptive UI**.For this purpose, we are goi
 
 #### Platform Type
 * android
-* fucshia
+* fuchsia
 * iOS
 * windows
 * macOS
@@ -295,9 +297,11 @@ class _HomePageState extends State<HomePage> {
 
 #### AdaptiveBuilder Custom Constructor (AdaptiveBuilder.custom)
 
+The custom constructor of the **AdaptiveBuilder** accepts following params:
+
 | Param                 | Type                                      |  
 | ----------------------| ----------------------------------------- | 
-| Builder               | AdaptiveWidgetBuilder   (Required)        | 
+| defaultBuilder        | AdaptiveWidgetBuilder   (Required)        | 
 | androidDelegate       | AdaptiveLayoutDelegate? (Optional)        | 
 | fuchsiaDelegate       | AdaptiveLayoutDelegate? (Optional)        | 
 | iosDelegate           | AdaptiveLayoutDelegate? (Optional)        | 
@@ -309,75 +313,6 @@ class _HomePageState extends State<HomePage> {
 | breakpointData        | BreakpointData?         (Optional)        |
 
 
-### Description
-
-- **breakpointData**
-
-This Widget obtains the `BreakpointData` based on the following rules:
-
-1. the `breakpointData` param that is passed to the constructor.
-2. If the `breakpointData` param is null(no param is passed to the constructor), The `breakPointData` is obtained from the closest `Breakpoint` instance that encloses the given context.
-3. If there is no `Breakpoint` in the widget tree above this widget, it will use the default sizes.
-
-
-Use this param to override the default sizes:
-
-1. Use `Breakpoint.of(context)` to obtain The `breakPointData` from the closest `Breakpoint` instance that encloses the given context and then override sizes by calling `copyWith()` method:
-```dart
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return AdaptiveBuilder(
-      breakpointData: Breakpoint.of(context).copyWith(
-        small: ,
-        medium: ,
-        large: ,
-        mediumHandset: ,
-        ...
-      ),
-    );
-  }
-}
-```
-
-2. Or pass a fresh `breakpointData` by creating a `breakpointData` from scratch:
-```dart
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return AdaptiveBuilder(
-      breakpointData: BreakpointData(
-        minSmallScreenWidth: 350,
-        minMediumScreenWidth: 700,
-        minLargeScreenWidth: 1200,
-        minXLargeScreenWidth: 1800,
-        minMediumHandsetWith: 350,
-        minLargeHandsetWith: 420,
-        minSmallTabletWidth: 600,
-        minLargeTabletWidth: 900,
-        minSmallDesktopWidth: 1100,
-        minMediumDesktopWidth: 1400,
-        minLargeDesktopWidth: 1900,
-      ),
-    );
-  }
-}
-```
 
 - **defaultBuilder**
 - **androidDelegate**
@@ -434,17 +369,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 ```
- **Screen** is an object that gives you some informations from the screen.
- 
-| Param                 | Type                  |   Definition    |
-| ----------------------| --------------------- | ----------------|
-| mediaQueryData        | MediaQueryData        | The `mediaQueryData` from the closest `MediaQuery` instance that encloses the given context. |
-| breakpointData        | BreakpointData        | _                                     |
-| layoutConstraints     | BoxConstraints?       | Obtain from LayoutBuilder widget      |
-| screenSize            | ScreenSize            | xSmall , small , medium , large , xLarge |
-| screenType            | ScreenType            | (small,medium,large)Handset , (small,large)Tablet , (small,medium,large)Desktop |
-| designLanguage        | DesignLanguage        | material , cupertino , fluent | 
-| platform              | PlatformType          | android , fuchsia , ios , windows , macos , linux , web |
+
 
 - **Custom Delegates**
 
@@ -691,3 +616,33 @@ class _HomePageState extends State<HomePage> {
 ## PlatformBuilder
 
 ## AdaptiveDesign
+   
+## Screen
+
+ **Screen** is an object that gives you some informations from the Window.
+ I called it **Screen**, not **Window**, because of there is an Object with this name (Window) in Flutter(see **WidgetsBinding.window).
+   
+ The **Screen** has following params:
+ 
+| Param                 | Type                  |   Definition    |
+| ----------------------| --------------------- | ----------------|
+| mediaQueryData        | MediaQueryData        | The **mediaQueryData** from the closest **MediaQuery** instance that encloses the given context. |
+| breakpointData        | BreakpointData        | _                                     |
+| screenSize            | ScreenSize            | xSmall , small , medium , large , xLarge |
+| screenType            | ScreenType            | (small,medium,large)Handset , (small,large)Tablet , (small,medium,large)Desktop |
+| designLanguage        | DesignLanguage        | material , cupertino , fluent | 
+| platform              | PlatformType          | android , fuchsia , ios , windows , macos , linux , web |
+   
+This object is passed to the **AdaptiveWidgetBuilder** and then you can use that to obtain some information about your window.
+   
+You can also use following constructors to create a **Screen* by yourself.
+   
+#### Screen.fromContext(BuildContext context)
+
+This factory constructor takes a context and then obtains the **mediaQueryData** and the **breakpointData** based on.
+   
+#### Screen.fromWindow()
+   
+This factory constructor uses the **FlutterWindow** (WidgetsBinding.instance.window) and then obtains the **mediaQueryData** by the **MediaQueryData.fromWidow** constructor and also uses the default sizes for obtain the **breakpointData**.
+
+## Utility Functions
