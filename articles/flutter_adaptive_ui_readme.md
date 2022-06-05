@@ -21,7 +21,7 @@ For more informations follow this [link](https://docs.flutter.dev/development/ui
 * [PlatformBuilder](#platformbuilder)
 * [AdaptiveDesign](#adaptivedesign)
 * [Screen](#screen)
-* [Utility Functions](#utility Functions)
+* [Helpers](#helpers)
  
 
 ## Overview
@@ -221,7 +221,7 @@ The default constructor of the **AdaptiveBuilder** accepts three params:
 | layoutDelegate        | AdaptiveLayoutDelegate? (Optional)        | 
 | breakpointData        | BreakpointData?         (Optional)        |
 
-##### breakpointData
+### breakpointData
 
 The **AdaptiveBuilder**  obtains the **BreakpointData** based on the following rules:
 
@@ -291,38 +291,381 @@ class _HomePageState extends State<HomePage> {
 }
 ```
 
-##### layoutDelegate
+### layoutDelegate
 
-##### defaultBuilder
+You can use this param to build your UI based on your purpose.
 
-#### AdaptiveBuilder Custom Constructor (AdaptiveBuilder.custom)
+You must pass an object of **AdaptiveLayoutDelegate** to this param.
+
+The **AdaptiveLayoutDelegate** is an abstract class and so you must use its implementations.
+
+I have provided some custom implementations for you.
+
+### AdaptiveLayoutDelegateWithScreenType
+
+ This delegate builds layout based on the **ScreenType** (smallHandset , mediumhandset , largeHandset , smallTablet , largeTablet , smallDesktop ,       mediumDesktop , largeDesktop).
+
+  All params are **optional**.
+  
+  You must pass a [AdaptiveWidgetBuilder](#adaptivewidgetbuilder) to the all params.
+
+<!-- <details><summary>Example</summary> -->
+
+  ```dart
+  class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return AdaptiveBuilder(
+      defaultBuilder: (BuildContext context, Screen screen) {
+        return const Center(
+          child: Text('Default Builder'),
+        );
+      },
+      layoutDelegate: AdaptiveLayoutDelegateWithScreenType(
+        smallHandset: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('Small Handset'),
+          );
+        },
+        mediumHandset: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('Medium Handset'),
+          );
+        },
+        largeHandset: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('Large Handset'),
+          );
+        },
+        smallTablet: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('Small Tablet'),
+          );
+        },
+        largeTablet: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('Large Tablet'),
+          );
+        },
+        smallDesktop: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('Small Desktop'),
+          );
+        },
+        mediumDesktop: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('Medium Desktop'),
+          );
+        },
+        largeDesktop: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('Large Desktop'),
+          );
+        },
+      ),
+    );
+  }
+}
+```
+
+<!-- </details> -->
+
+
+### AdaptiveLayoutDelegateWithMinimallScreenType
+  
+   This delegate builds layout based on the minimall **ScreenType** (handset , tablet , desktop).
+   
+   All params are **optional**.
+   
+   smallHandsrt , mediumHandset and largeHandset are interpreted as **handset**.
+   
+   smallTablet and largeTablet are interpreted as **tablet**.
+  
+   smallDesktop , mediumDesktop and largeDesktop are interpreted as **desktop**.
+   
+   You must pass a [AdaptiveWidgetBuilder](#adaptivewidgetbuilder) to the all params.
+   
+  
+<!--   <details><summary>Example</summary> -->
+
+  ```dart
+  class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return AdaptiveBuilder(
+        defaultBuilder: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('Default Builder'),
+          );
+        },
+        layoutDelegate: AdaptiveLayoutDelegateWithMinimallScreenType(
+          handset: (BuildContext context, Screen screen) {
+            return const Center(
+              child: Text('Handset'),
+            );
+          },
+          tablet: (BuildContext context, Screen screen) {
+            return const Center(
+              child: Text('Tablet'),
+            );
+          },
+          desktop: (BuildContext context, Screen screen) {
+            return const Center(
+              child: Text('Desktop'),
+            );
+          },
+        ));
+  }
+}
+
+```
+
+<!-- </details> -->
+
+
+### AdaptiveLayoutDelegateWithScreenSize
+
+This delegate builds layout based on the **ScreenSize** (xSmall , small , medium , large , xLarge).
+
+  All params are **optional**.
+  
+  You must pass a [AdaptiveWidgetBuilder](#adaptivewidgetbuilder) to the all params.
+    
+    
+<!--   <details><summary>Example</summary> -->
+
+  ```dart
+ class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return AdaptiveBuilder(
+      defaultBuilder: (BuildContext context, Screen screen) {
+        return const Center(
+          child: Text('Default Builder'),
+        );
+      },
+      layoutDelegate: AdaptiveLayoutDelegateWithScreenSize(
+        xSmall: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('XSmall Window'),
+          );
+        },
+        small: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('Small Window'),
+          );
+        },
+        medium: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('Medium Window'),
+          );
+        },
+        large: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('large Window'),
+          );
+        },
+        xLarge: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('XLarge Window'),
+          );
+        },
+      ),
+    );
+  }
+}
+
+```
+
+<!-- </details> -->
+ 
+ ### AdaptiveLayoutDelegateWithMinimallScreenSize
+ 
+ This delegate builds layout based on the minimall **ScreenSize** (small , medium , large).
+   
+   All params are **optional**.
+   
+   xSmall and small are interpreted as **small**.
+  
+   large and xLarge are interpreted as **large**.
+   
+
+
+### AdaptiveLayoutDelegateWithDesignLanguage
+
+ This delegate builds layout based on the **DesignLaguage** (material , cupertino , fluent).
+    
+ All params are **optional**.
+ 
+ You must pass a [AdaptiveWidgetBuilder](#adaptivewidgetbuilder) to the all params.
+    
+    
+<!--   <details><summary>Example</summary> -->
+
+  ```dart
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return AdaptiveBuilder(
+      defaultBuilder: (BuildContext context, Screen screen) {
+        return const Center(
+          child: Text('Default Builder'),
+        );
+      },
+      allOsDelegate: AdaptiveLayoutDelegateWithDesignLanguage(
+        material: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('Material'),
+          );
+        },
+        cupertino: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('Cupertino'),
+          );
+        },
+        fluent: (BuildContext context, Screen screen) {
+          return const Center(
+            child: Text('Fluent'),
+          );
+        },
+      ),
+    );
+  }
+}
+
+```
+
+<!-- </details> -->
+
+
+### AdaptiveLayoutDelegateWithSingleBuilder
+
+This delegate takes a builder and builds layout for all types by that single builder.
+
+### defaultBuilder
+
+If the **layoutDelegate** is not passed or it is passed but a custom builder for the desired purpos (ScreenSize , ScreenType , DesignLanguage) is not provided, then the **defaultBuilder** is used to build UI.
+
+You must pass a [AdaptiveWidgetBuilder](#adaptivewidgetbuilder) to this param.
+
+
+### AdaptiveWidgetBuilder
+
+This builder gives you a **BuildContext** and a [Screen](#screen) and you must return a widget.
+
+```dart
+typedef AdaptiveWidgetBuilder = Widget Function(
+    BuildContext context, Screen screen);
+```
+
+For more information about the **Screen** follow [this](#screen)
+
+### AdaptiveBuilder Custom Constructor (AdaptiveBuilder.custom)
 
 The custom constructor of the **AdaptiveBuilder** accepts following params:
 
 | Param                 | Type                                      |  
 | ----------------------| ----------------------------------------- | 
 | defaultBuilder        | AdaptiveWidgetBuilder   (Required)        | 
-| androidDelegate       | AdaptiveLayoutDelegate? (Optional)        | 
-| fuchsiaDelegate       | AdaptiveLayoutDelegate? (Optional)        | 
-| iosDelegate           | AdaptiveLayoutDelegate? (Optional)        | 
-| WindowsDelegate       | AdaptiveLayoutDelegate? (Optional)        | 
-| macosDelegate         | AdaptiveLayoutDelegate? (Optional)        | 
-| linuxDelegate         | AdaptiveLayoutDelegate? (Optional)        | 
-| webDelegate           | AdaptiveLayoutDelegate? (Optional)        | 
+| [androidDelegate](#androiddelegate)       | AdaptiveLayoutDelegate? (Optional)        | 
+| [fuchsiaDelegate](#fuchsiadelegate)       | AdaptiveLayoutDelegate? (Optional)        | 
+| [iosDelegate](#iosdelegate)           | AdaptiveLayoutDelegate? (Optional)        | 
+| [windowsDelegate](#windowsdelegate)       | AdaptiveLayoutDelegate? (Optional)        | 
+| [macosDelegate](#macosdelegate)         | AdaptiveLayoutDelegate? (Optional)        | 
+| [linuxDelegate](#linuxdelegate)         | AdaptiveLayoutDelegate? (Optional)        | 
+| [webDelegate](#webdelegate)           | AdaptiveLayoutDelegate? (Optional)        | 
 | allPlatformsDelegate  | AdaptiveLayoutDelegate? (Optional)        |
 | breakpointData        | BreakpointData?         (Optional)        |
 
 
+### androidDelegate
 
-- **defaultBuilder**
-- **androidDelegate**
-- **fuchsiaDelegate**
-- **iosDelegate**
-- **windowsDelegate**
-- **macosDelegate**
-- **linuxDelegate**
-- **webDelegate**
-- **allPlatformsDelegate**
+By this param you can build your UI for android platform.
+
+You must pass a **AdaptiveLayoutDelegate** to this param.
+
+### fuchsiaDelegate
+
+By this param you can build your UI for fuchsia platform.
+
+You must pass a **AdaptiveLayoutDelegate** to this param.
+
+
+### iosDelegate
+
+By this param you can build your UI for iOS platform.
+
+You must pass a **AdaptiveLayoutDelegate** to this param.
+
+
+### windowsDelegate
+
+By this param you can build your UI for windows platform.
+
+You must pass a **AdaptiveLayoutDelegate** to this param.
+
+
+### macosDelegate
+
+By this param you can build your UI for macOS platform.
+
+You must pass a **AdaptiveLayoutDelegate** to this param.
+
+
+### linuxDelegate
+
+By this param you can build your UI for linux platform.
+
+You must pass a **AdaptiveLayoutDelegate** to this param.
+
+
+### webDelegate
+
+By this param you can build your UI for web platform.
+
+You must pass a **AdaptiveLayoutDelegate** to this param.
+
+
+For all these params you can use the following implementations:
+
+* [AdaptiveLayoutDelegateWithScreenType](#adaptivelayoutdelegatewithscreentype) 
+* [AdaptiveLayoutDelegateWithMinimallScreenType](#adaptivelayoutdelegatewithminimallscreentype) 
+* [AdaptiveLayoutDelegateWithScreenSize](#adaptivelayoutdelegatewithscreensize) 
+* [AdaptiveLayoutDelegateWithMinimallScreenSize](#adaptivelayoutdelegatewithminimallscreensize) 
+* [AdaptiveLayoutDelegateWithDesignLanguage](#adaptivelayoutdelegatewithdesignlanguage) 
+* [AdaptiveLayoutDelegateWithSingleBuilder](#adaptivelayoutdelegatewithsinglebuilder).
+
+
+
+### allPlatformsDelegate
 
 First of all, this widget obtains the **ScreenSize** , **ScreenType** and **Designlanguage** and then builds UI based on the following rules:
 
@@ -377,241 +720,9 @@ All these params are **optional**.
 
 You must pass a `AdaptiveLayoutDelegate`.this class is an abstract class and you can use following implementations or create your custom implementation from scratch:
 
-#### AdaptiveLayoutDelegateWithScreenType
-
-  This delegate builds layout based on the **ScreenType** (smallHandset , mediumhandset , largeHandset , smallTablet , largeTablet , smallDesktop ,       mediumDesktop , largeDesktop).
-
-  All params are **optional**.
-
-<details><summary>Example</summary>
-
-  ```dart
-  class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return AdaptiveBuilder(
-      builder: (BuildContext context, Screen screen) {
-        return const Center(
-          child: Text('Default Builder'),
-        );
-      },
-      webDelegate: AdaptiveLayoutDelegateWithScreenType(
-        smallHandset: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Web - Small Handset'),
-          );
-        },
-        mediumHandset: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Web - Medium Handset'),
-          );
-        },
-        largeHandset: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Web - Large Handset'),
-          );
-        },
-        smallTablet: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Web - Small Tablet'),
-          );
-        },
-        largeTablet: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Web - Large Tablet'),
-          );
-        },
-        smallDesktop: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Web - Small Desktop'),
-          );
-        },
-        mediumDesktop: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Web - Medium Desktop'),
-          );
-        },
-        largeDesktop: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Web - Large Desktop'),
-          );
-        },
-      ),
-    );
-  }
-}
-```
-
-</details>
-
-
-#### AdaptiveLayoutDelegateWithMinimallScreenType
-  
-   This delegate builds layout based on the minimall **ScreenType** (handset , tablet , desktop);
-  
-  <details><summary>Example</summary>
-
-  ```dart
-  class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return AdaptiveBuilder(
-        builder: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Default Builder'),
-          );
-        },
-        webDelegate: AdaptiveLayoutDelegateWithMinimallScreenType(
-          handset: (BuildContext context, Screen screen) {
-            return const Center(
-              child: Text('Web - Handset'),
-            );
-          },
-          tablet: (BuildContext context, Screen screen) {
-            return const Center(
-              child: Text('Web - Handset'),
-            );
-          },
-          desktop: (BuildContext context, Screen screen) {
-            return const Center(
-              child: Text('Web - Handset'),
-            );
-          },
-        ));
-  }
-}
-
-```
-
-</details>
- 
-    
-#### AdaptiveLayoutDelegateWithScreenSize
-#### AdaptiveLayoutDelegateWithMinimallScreenSize
-    
-    
-  <details><summary>Example</summary>
-
-  ```dart
- class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return AdaptiveBuilder(
-      builder: (BuildContext context, Screen screen) {
-        return const Center(
-          child: Text('Default Builder'),
-        );
-      },
-      webDelegate: AdaptiveLayoutDelegateWithScreenSize(
-        xSmall: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Web - XSmall Window'),
-          );
-        },
-        small: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Web - Small Window'),
-          );
-        },
-        medium: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Web -  Medium Window'),
-          );
-        },
-        large: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Web -  large Window'),
-          );
-        },
-        xLarge: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Web - XLarge Window'),
-          );
-        },
-      ),
-    );
-  }
-}
-
-```
-
-</details>
-  
-    
-#### AdaptiveLayoutDelegateWithDesignLanguage
-
- This delegate builds layout based on the **DesignLaguage** (material , cupertino , fluent).
-    
- All params are **optional**.
-    
-    
-  <details><summary>Example</summary>
-
-  ```dart
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return AdaptiveBuilder(
-      builder: (BuildContext context, Screen screen) {
-        return const Center(
-          child: Text('Default Builder'),
-        );
-      },
-      allOsDelegate: AdaptiveLayoutDelegateWithDesignLanguage(
-        material: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Material'),
-          );
-        },
-        cupertino: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Cupertino'),
-          );
-        },
-        fluent: (BuildContext context, Screen screen) {
-          return const Center(
-            child: Text('Fluent'),
-          );
-        },
-      ),
-    );
-  }
-}
-
-```
-
-</details>
   
 
-#### AdaptiveLayoutDelegateWithSingleBuilder
+
 
 ## PlatformBuilder
 
@@ -645,4 +756,38 @@ This factory constructor takes a context and then obtains the **mediaQueryData**
    
 This factory constructor uses the **FlutterWindow** (WidgetsBinding.instance.window) and then obtains the **mediaQueryData** by the **MediaQueryData.fromWidow** constructor and also uses the default sizes for obtain the **breakpointData**.
 
-## Utility Functions
+## Helpers
+
+#### getDefaultPlatform()
+
+_getDefaultPlatform()_ is a top level function that gives you the **PlatformType**.(web , android , fuchsia , iOS , windows , macOS , linux)
+
+#### getDefaultDesignLanguage()
+   
+_getDefaultDesignLanguage()_ is a top level function that gives you the **DesignLanguage**.(material , cupertino , fluent)
+   
+
+   
+```
+ MIT License
+
+Copyright (c) 2022 Mohammad Taheri
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+   ```
